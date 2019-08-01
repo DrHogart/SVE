@@ -28,7 +28,7 @@ RSCRIPT = `which Rscript`
 R = `which R`
 
 # all
-all: unzip_tarballs perl-lib htslib bwa_samtools speedseq bcftools bedtools2 delly hydra tigra CNVnator_v0.3.3 breakdancer lumpy R-package
+all: unzip_tarballs perl-lib htslib bwa_samtools speedseq bcftools bedtools2 delly hydra tigra CNVnator_v0.4 breakdancer lumpy R-package
 	@test -d $(SVE_DIR)/data || tar -zxvf data.tar.gz # unzip data
 	@test -d $(SVE_DIR)/$(TARGET_BIN) || mkdir $(SVE_DIR)/$(TARGET_BIN)
 	$(MAKE) tool_paths
@@ -97,18 +97,18 @@ htslib:
 	$(MAKE) --no-print-directory -C $(SVE_DIR)/$(SRC)/htslib
 	@test -f $(SVE_DIR)/$(SRC)/htslib/configure.ac~ && mv $(SVE_DIR)/$(SRC)/htslib/configure.ac~ $(SVE_DIR)/$(SRC)/htslib/configure.ac
 
-CNVnator_v0.3.3:
+CNVnator_v0.4:
 ifeq ($(ROOTSYS),)
-	@echo "\nERROR: CNVnator_v0.3.3 cannot be compiled because the ROOT package is not installed."
+	@echo "\nERROR: CNVnator_v0.4 cannot be compiled because the ROOT package is not installed."
 	@echo "\tYou may download Root version 6.09/02 from https://root.cern.ch/content/release-60902."
 	@echo "\tAfter installing Root, please do\n"
 	@echo "\texport ROOTSYS=<path_to_root>"
 	@echo "\texport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$ROOTSYS/lib"
 else
-	@echo "- Building in CNVnator_v0.3.3"
-	@cd $(SVE_DIR)/$(SRC) && tar -zxvf CNVnator_v0.3.3.tar.gz
-	$(MAKE) --no-print-directory -C $(SRC)/CNVnator_v0.3.3/src/samtools
-	$(MAKE) --no-print-directory -C $(SRC)/CNVnator_v0.3.3/src
+	@echo "- Building in CNVnator_v0.4"
+	@cd $(SVE_DIR)/$(SRC) && tar -zxvf CNVnator_v0.4.tar.gz
+	$(MAKE) --no-print-directory -C $(SRC)/CNVnator_v0.4/src/samtools
+	$(MAKE) --no-print-directory -C $(SRC)/CNVnator_v0.4/src
 endif
 
 breakdancer:
@@ -184,8 +184,8 @@ tool_paths:
 	@echo "TOOLS ['TABIX']         = '$(SVE_DIR)/$(SRC)/htslib/tabix'" >> $(TOOL_PATHS)
 	@echo "TOOLS ['JAVA-1.8']      = '$(SVE_DIR)/$(SRC)/jre1.8.0_51/bin/java'" >> $(TOOL_PATHS)
 	@echo "TOOLS ['PICARD']        = '$(SVE_DIR)/$(SRC)/picard-tools-2.5.0/picard.jar'" >> $(TOOL_PATHS)
-	@echo "TOOLS ['CNVNATOR']      = '$(SVE_DIR)/$(SRC)/CNVnator_v0.3.3/src/cnvnator'" >> $(TOOL_PATHS)
-	@echo "TOOLS ['CNVNATOR2VCF']  = '$(SVE_DIR)/$(SRC)/CNVnator_v0.3.3/cnvnator2VCF.pl'" >> $(TOOL_PATHS)
+	@echo "TOOLS ['CNVNATOR']      = '$(SVE_DIR)/$(SRC)/CNVnator_v0.4/src/cnvnator'" >> $(TOOL_PATHS)
+	@echo "TOOLS ['CNVNATOR2VCF']  = '$(SVE_DIR)/$(SRC)/CNVnator_v0.4/cnvnator2VCF.pl'" >> $(TOOL_PATHS)
 	@echo "TOOLS ['DELLY']         = '$(SVE_DIR)/$(SRC)/delly/src/delly'" >> $(TOOL_PATHS)
 	@echo "TOOLS ['BCFTOOLS']      = '$(SVE_DIR)/$(SRC)/bcftools/bcftools'" >> $(TOOL_PATHS)
 	@echo "TOOLS ['BEDTOOLS']      = '$(SVE_DIR)/$(SRC)/bedtools2/bin/bcftools'" >> $(TOOL_PATHS)
