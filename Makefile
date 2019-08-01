@@ -107,8 +107,9 @@ ifeq ($(ROOTSYS),)
 else
 	@echo "- Building in CNVnator_v0.4"
 	@cd $(SVE_DIR)/$(SRC) && tar -zxvf CNVnator_v0.4.tar.gz
-	$(MAKE) --no-print-directory -C $(SRC)/CNVnator_v0.4/src/samtools
-	$(MAKE) --no-print-directory -C $(SRC)/CNVnator_v0.4/src
+	@cd $(SVE_DIR)/$(SRC)/CNVnator_v0.4; \
+	ln -s /tools/SVE/src/samtools/samtools .; \
+	$(MAKE) --no-print-directory -C $(SVE_DIR)/$(SRC)/CNVnator_v0.4
 endif
 
 breakdancer:
