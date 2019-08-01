@@ -1,4 +1,4 @@
-FROM python:2.7
+FROM python:2.7.16-jessie
 
 MAINTAINER Wan-Ping Lee <wan-ping.lee@jax.org>
 
@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
 	python-numpy \
 	openjdk-7-* \
 	gawk \
-	libgd-gd2-perl
+	libgd-gd2-perl \
+	gfortran
 
 # Make a folder for tools
 RUN cd / && mkdir -p tools && cd /tools
@@ -26,7 +27,7 @@ RUN cd /tools \
 	&& tar -zxvf cmake-3.10.0-rc5.tar.gz \
 	&& cd cmake-3.10.0-rc5 \
 	&& ./bootstrap \
-	&& make -j8 \
+	&& make -j20 \
 	&& make install
 
 # Install ROOT
@@ -34,8 +35,8 @@ RUN cd /tools \
 	&& git clone http://root.cern.ch/git/root.git \
 	&& cd root/build \
 	&& cmake .. \
-	&& cmake --build . -- -j8 \
-	&& cmake --build . --target install -- -j8
+	&& cmake --build . -- -j20 \
+	&& cmake --build . --target install -- -j20
 
 # Set the ROOT path
 ENV ROOTSYS=/tools/root/build
@@ -52,7 +53,7 @@ RUN pip install HTSeq \
 
 # Install R-3.3.3
 RUN cd /tools \
-        && git clone --recursive https://github.com/TheJacksonLaboratory/SVE.git \
+        && git clone --recursive https://github.com/DrHogart/SVE.git \
         && cd SVE \
         && make R-install
 
